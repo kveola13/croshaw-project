@@ -34,12 +34,20 @@ def find_house():
         print("You did not get 3 of the same")
 
 
+def chance_play(list_of_dice: list):
+    total = 0
+    for value in list_of_dice:
+        total += value
+    return total
+
+
 def play_strict_order():
     for index in range(1, 7, 1):
         print(find_pair(index, 0, throw_dice(6)))
     find_house()
     yahtzee_test_list = [5, 5, 5, 5, 5, 5]
     find_yahtzee(yahtzee_test_list)
+    print(chance_play(throw_dice(6)))
 
 
 def play_loose_order():
