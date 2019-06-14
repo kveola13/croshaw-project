@@ -42,11 +42,18 @@ def chance_play(list_of_dice: list):
 
 
 def check_straight(list_of_dice: list):
-    sorted_list = list(range(min(list_of_dice), max(list_of_dice)+1))
-    print(sorted_list)
-    if len(sorted_list) == 5:
+    print(list_of_dice)
+    dice_set = set()
+    for dice_number in list_of_dice:
+        if dice_number not in dice_set:
+            dice_set.add(dice_number)
+    print(dice_set)
+    for value in range(0, len(dice_set) - 1, 1):
+        if list(dice_set)[value] + 1 != list(dice_set)[value + 1]:
+            return 0
+    if len(dice_set) >= 5:
         return 40
-    if len(sorted_list) == 4:
+    if len(dice_set) == 4:
         return 30
 
 
