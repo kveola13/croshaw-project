@@ -42,16 +42,20 @@ def chance_play(list_of_dice: list):
 
 
 def check_straight(list_of_dice: list):
-    sorted_list = list(range(min(list_of_dice), max(list_of_dice) + 1))
-    return sum(sorted_list * 2)
+    sorted_list = list(range(min(list_of_dice), max(list_of_dice)+1))
+    print(sorted_list)
+    if len(sorted_list) == 5:
+        return 40
+    if len(sorted_list) == 4:
+        return 30
 
 
 def play_strict_order():
     for index in range(1, 7, 1):
         print(find_pair(index, 0, throw_dice(6)))
     find_house()
-    check_straight(throw_dice(6))
-    check_straight(throw_dice(6))
+    print(check_straight(throw_dice(6)))
+    print(check_straight(throw_dice(6)))
     yahtzee_test_list = [5, 5, 5, 5, 5, 5]
     find_yahtzee(yahtzee_test_list)
     print(chance_play(throw_dice(6)))
@@ -65,5 +69,6 @@ def play_loose_order():
 if __name__ == '__main__':
     numbers = [2, 3, 6, 4, 5]
     # print(find_pair(2, throw_dice(6)))
-    play_strict_order()
+    # play_strict_order()
+    print(check_straight(throw_dice(6)))
     exit()
