@@ -21,7 +21,8 @@ def find_pair(amount_of_paris: int, list_of_dice: list):
 
 
 def play_strict_order():
-    return None
+    for index in range(1, 7, 1):
+        print(find_pair(index, throw_dice(6)))
 
 
 def play_loose_order():
@@ -31,5 +32,6 @@ def play_loose_order():
 
 if __name__ == '__main__':
     numbers = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 5, 5]
-    print(find_pair(2, throw_dice(6)))
+    # print(find_pair(2, throw_dice(6)))
+    play_strict_order()
     exit()
