@@ -13,6 +13,8 @@ def roll_dice_with_exchange(list_of_dice: list):
             list_of_dice.remove(dice)
     except ValueError:
         print("There was an error, most likely a misplaced space..")
+    if len(kept_dice_list) is 0:
+        return list_of_dice
     if len(kept_dice_list) is not 0:
         print("You kept: " + str(kept_dice_list))
     if len(list_of_dice) is not 0:
@@ -38,7 +40,7 @@ def find_pair(amount_of_paris: int, number_to_exclude: int, list_of_dice: list):
                     sum_of_dice = max(dice_number * amount_of_paris, sum_of_dice)
     if sum_of_dice is not 0:
         print("You got " + str(amount_of_paris) + " " + str(int(sum_of_dice / amount_of_paris)) + "\'s")
-        print("Your score: " + str(sum_of_dice) + "\n")
+        print("You get: " + str(sum_of_dice) + " points!\n")
         return sum_of_dice
     else:
         print("Your roll did not get " + str(amount_of_paris) + " equal dice\n")
@@ -49,11 +51,11 @@ def find_yahtzee(list_of_dice: list):
     return find_pair(6, 0, list_of_dice)
 
 
-def find_house():
+def find_house(amount_of_die):
     try:
-        sum_of_dice, number_to_exclude = find_pair(3, 0, throw_dice(6))
+        sum_of_dice, number_to_exclude = find_pair(3, 0, roll_dice_with_exchange(throw_dice(amount_of_die)))
         print("Number to exclude: " + str(number_to_exclude))
-        print(find_pair(2, number_to_exclude, throw_dice(6)))
+        sum_of_dice += find_pair(2, number_to_exclude, roll_dice_with_exchange(throw_dice(amount_of_die)))
         return sum_of_dice
     except TypeError:
         print("Sorry! You did not get house!\n")
@@ -64,6 +66,7 @@ def chance_play(list_of_dice: list):
     total = 0
     for value in list_of_dice:
         total += value
+    print("You get: " + str(total) + " points!")
     return total
 
 
@@ -88,7 +91,7 @@ def play_strict_order(amount_of_dice: int):
         print("Now playing for: " + str(index) + " amount of pairs!")
         score += find_pair(index, 0, roll_dice_with_exchange(throw_dice(amount_of_dice)))
     print("Now playing for house:")
-    score += find_house()
+    score += find_house(amount_of_dice)
     print("Now playing for small straight:")
     score += check_straight(roll_dice_with_exchange(throw_dice(amount_of_dice)))
     print("Now playing for big straight:")
