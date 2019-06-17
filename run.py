@@ -1,6 +1,24 @@
 import random
 
 
+def try_input_list(list_of_dice: list):
+    kept_dice_list = []
+    print(list_of_dice)
+    for kept_dice in map(int, input("Input the dice you want to keep, separated by a space: ").split(" ")):
+        if kept_dice is not "":
+            kept_dice_list.append(kept_dice)
+    for number in list_of_dice:
+        if number in kept_dice_list:
+            list_of_dice.remove(number)
+    print("You kept: " + str(kept_dice_list))
+    print("These will be re-rolled: " + str(list_of_dice))
+    new_dice_throw = throw_dice(len(list_of_dice))
+    print(new_dice_throw)
+    for value in new_dice_throw:
+        kept_dice_list.append(value)
+    print(kept_dice_list)
+
+
 def throw_dice(amount_of_die: int):
     return [random.randint(1, 6) for _ in range(0, amount_of_die, 1)]
 
@@ -74,8 +92,9 @@ def play_loose_order():
 
 
 if __name__ == '__main__':
-    numbers = [2, 3, 6, 4, 5]
+    numbers = [2, 3, 6, 4, 5, 5]
     # print(find_pair(2, throw_dice(6)))
     # play_strict_order()
-    print(check_straight(throw_dice(6)))
+    # print(check_straight(throw_dice(6)))
+    try_input_list(numbers)
     exit()
