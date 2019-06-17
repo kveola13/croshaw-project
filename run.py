@@ -41,7 +41,7 @@ def find_pair(amount_of_paris: int, number_to_exclude: int, list_of_dice: list):
     if sum_of_dice is not 0:
         print("You got " + str(amount_of_paris) + " " + str(int(sum_of_dice / amount_of_paris)) + "\'s")
         print("You get: " + str(sum_of_dice) + " points!\n")
-        return sum_of_dice
+        return sum_of_dice, int(sum_of_dice / amount_of_paris)
     else:
         print("Your roll did not get " + str(amount_of_paris) + " equal dice\n")
         return 0
@@ -51,14 +51,16 @@ def find_yahtzee(list_of_dice: list):
     return find_pair(6, 0, list_of_dice)
 
 
-def find_house(amount_of_die):
+def find_house(list_of_dice: list, amount_of_dice: int):
     try:
-        sum_of_dice, number_to_exclude = find_pair(3, 0, roll_dice_with_exchange(throw_dice(amount_of_die)))
+        sum_of_dice, number_to_exclude = find_pair(3, 0, list_of_dice)
         print("Number to exclude: " + str(number_to_exclude))
-        sum_of_dice += find_pair(2, number_to_exclude, roll_dice_with_exchange(throw_dice(amount_of_die)))
-        return sum_of_dice
+        second_list_of_dice = roll_dice_with_exchange(throw_dice(amount_of_dice))
+        second_sum, number_to_exclude = find_pair(2, number_to_exclude, second_list_of_dice)
+        print("You scored: " + str(sum_of_dice + second_sum))
+        return sum_of_dice + second_sum
     except TypeError:
-        print("Sorry! You did not get house!\n")
+        print("You did not get the required pairs!\n")
         return 0
 
 
@@ -91,7 +93,7 @@ def play_strict_order(amount_of_dice: int):
         print("Now playing for: " + str(index) + " amount of pairs!")
         score += find_pair(index, 0, roll_dice_with_exchange(throw_dice(amount_of_dice)))
     print("Now playing for house:")
-    score += find_house(amount_of_dice)
+    score += find_house(roll_dice_with_exchange(throw_dice(amount_of_dice)), amount_of_dice)
     print("Now playing for small straight:")
     score += check_straight(roll_dice_with_exchange(throw_dice(amount_of_dice)))
     print("Now playing for big straight:")
