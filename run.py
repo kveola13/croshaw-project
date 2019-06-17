@@ -4,19 +4,18 @@ import random
 def try_input_list(list_of_dice: list):
     kept_dice_list = []
     print(list_of_dice)
-    for kept_dice in map(int, input("Input the dice you want to keep, separated by a space: ").split(" ")):
-        if kept_dice is not "":
-            kept_dice_list.append(kept_dice)
-    for number in list_of_dice:
-        if number in kept_dice_list:
-            list_of_dice.remove(number)
+    for dice in map(int, input("Input the dice you want to keep, separated by a space: ").split(" ")):
+        if dice is not "" and dice in list_of_dice:
+            kept_dice_list.append(dice)
+            list_of_dice.remove(dice)
     print("You kept: " + str(kept_dice_list))
-    print("These will be re-rolled: " + str(list_of_dice))
-    new_dice_throw = throw_dice(len(list_of_dice))
-    print(new_dice_throw)
-    for value in new_dice_throw:
-        kept_dice_list.append(value)
-    print(kept_dice_list)
+    if len(list_of_dice) is not 0:
+        print("These will be re-rolled: " + str(list_of_dice))
+        new_dice_throw = throw_dice(len(list_of_dice))
+        print("New roll: " + str(new_dice_throw))
+        for value in new_dice_throw:
+            kept_dice_list.append(value)
+        print("Your dice are now: " + str(kept_dice_list))
 
 
 def throw_dice(amount_of_die: int):
