@@ -1,21 +1,22 @@
 import random
 
 
-def try_input_list(list_of_dice: list):
+def roll_dice_with_exchange(list_of_dice: list):
     kept_dice_list = []
-    print(list_of_dice)
-    for dice in map(int, input("Input the dice you want to keep, separated by a space: ").split(" ")):
-        if dice is not "" and dice in list_of_dice:
-            kept_dice_list.append(dice)
+    print("Your roll: " + str(list_of_dice))
+    try:
+        for dice in map(int, input("Input the die you want to keep, separated by a space: ").split(" ")):
+            if dice is not "" and dice in list_of_dice:
+                kept_dice_list.append(dice)
             list_of_dice.remove(dice)
+    except ValueError:
+        print("There was an error, most likely a misplaced space..")
     print("You kept: " + str(kept_dice_list))
     if len(list_of_dice) is not 0:
-        print("These will be re-rolled: " + str(list_of_dice))
         new_dice_throw = throw_dice(len(list_of_dice))
-        print("New roll: " + str(new_dice_throw))
         for value in new_dice_throw:
             kept_dice_list.append(value)
-        print("Your dice are now: " + str(kept_dice_list))
+        print("Your new die: " + str(kept_dice_list))
 
 
 def throw_dice(amount_of_die: int):
@@ -92,8 +93,5 @@ def play_loose_order():
 
 if __name__ == '__main__':
     numbers = [2, 3, 6, 4, 5, 5]
-    # print(find_pair(2, throw_dice(6)))
-    # play_strict_order()
-    # print(check_straight(throw_dice(6)))
-    try_input_list(numbers)
+    roll_dice_with_exchange(numbers)
     exit()
