@@ -44,11 +44,15 @@ def find_pair(amount_of_paris: int, number_to_exclude: int, list_of_dice: list):
         return sum_of_dice, int(sum_of_dice / amount_of_paris)
     else:
         print("Your roll did not get " + str(amount_of_paris) + " equal dice\n")
-        return 0
+        return 0, 0
 
 
 def find_yahtzee(list_of_dice: list):
-    return find_pair(6, 0, list_of_dice)
+    score, placeholder = find_pair(6, 0, list_of_dice)
+    if score > 0:
+        return score, True
+    else:
+        return score, False
 
 
 def find_house(list_of_dice: list, amount_of_dice: int):
@@ -58,10 +62,10 @@ def find_house(list_of_dice: list, amount_of_dice: int):
         second_list_of_dice = roll_dice_with_exchange(throw_dice(amount_of_dice))
         second_sum, number_to_exclude = find_pair(2, number_to_exclude, second_list_of_dice)
         print("You scored: " + str(sum_of_dice + second_sum))
-        return sum_of_dice + second_sum
+        return sum_of_dice + second_sum, True
     except TypeError:
         print("You did not get the required pairs!\n")
-        return 0
+        return 0, False
 
 
 def chance_play(list_of_dice: list):
@@ -69,7 +73,7 @@ def chance_play(list_of_dice: list):
     for value in list_of_dice:
         total += value
     print("You get: " + str(total) + " points!")
-    return total
+    return total, True
 
 
 def check_straight(list_of_dice: list):
@@ -80,11 +84,11 @@ def check_straight(list_of_dice: list):
     for value in range(0, len(dice_set) - 1, 1):
         if list(dice_set)[value] + 1 != list(dice_set)[value + 1]:
             print("Sorry, you did not get a straight!\n")
-            return 0
+            return 0, False
     if len(dice_set) >= 5:
-        return 40
+        return 40, True
     if len(dice_set) == 4:
-        return 30
+        return 30, True
 
 
 def play_strict_order(amount_of_dice: int):
@@ -112,6 +116,20 @@ def play_loose_order():
 
 
 if __name__ == '__main__':
-    # numbers = [2, 3, 6, 4, 5, 5]
-    play_strict_order(6)
+    numbers = [5, 5, 5, 5, 5, 4]
+    # play_strict_order(6)
+    score = 0
+    print("Now playing for house:")
+    house_score, house_boolean = find_house(roll_dice_with_exchange(throw_dice(6)), 6)
+    print("Now playing for small straight:")
+    small_straight_score, small_straight_boolean = check_straight(roll_dice_with_exchange(throw_dice(6)))
+    print("Now playing for big straight:")
+    big_straight_score, big_straight_boolean = check_straight(roll_dice_with_exchange(throw_dice(6)))
+    test_list = [5, 5, 5, 5, 5, 5]
+    print("Now playing for Yahtzee: ")
+    yahtzee_score, yahtzee_boolean = find_yahtzee(test_list)
+    print("Now playing for chance play!")
+    chance_score, chance_boolean = chance_play(roll_dice_with_exchange(throw_dice(6)))
+    score = score + house_score + small_straight_score + big_straight_score + yahtzee_score + chance_score
+    print("Thanks for playing! Your score is: " + str(score))
     exit()
