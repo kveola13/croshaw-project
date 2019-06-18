@@ -118,6 +118,6 @@ def play_loose_order():
 
 if __name__ == '__main__':
     numbers = [5, 5, 5, 5, 5, 4]
-    # play_strict_order(6)
+    play_strict_order(6)
 
     exit()
